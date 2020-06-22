@@ -11,11 +11,15 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return HomeList();
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class HomeList extends StatefulWidget {
@@ -50,17 +54,17 @@ class _HomeListState extends State<HomeList>
 
   @override
   Widget build(BuildContext context) {
-//    super.build(context);
+    super.build(context);
     return FutureBuilder(
       future: fetchPosts(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CupertinoActivityIndicator(
-              radius: 15,
-              animating: true,
-            ),
-          );
+//          return Center(
+//            child: CupertinoActivityIndicator(
+//              radius: 15,
+//              animating: true,
+//            ),
+//          );
         }
         return ListView(
           children: snapshot.data.map<Widget>((item) {
@@ -70,12 +74,6 @@ class _HomeListState extends State<HomeList>
                   FlatButton(
                     splashColor: Color.fromARGB(0, 0, 0, 0),
                     onPressed: () {
-//                      Fluttertoast.showToast(
-//                          msg: item.title,
-//                          gravity: ToastGravity.CENTER,
-//                          textColor: Colors.white);
-//                      print('Title:${item.title}');
-//                      print('哒哒哒哒哒');
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage(product: item)));
                     },
                     child: ListTile(
