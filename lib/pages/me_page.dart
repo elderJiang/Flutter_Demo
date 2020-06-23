@@ -18,6 +18,15 @@ class _MePageState extends State<MePage> {
           MiddleWidget(),
           DongtaiWiget(),
           TowRowWidget(),
+          BottomFourWidget(),
+          bottomThreeWidget(),
+          Container(
+            height: 70,
+//            color: Colors.orange,
+            child: Center(
+              child: Text('~设置人口挪到页面顶部了呦~'),
+            ),
+          )
         ],
       ),
     );
@@ -91,7 +100,7 @@ Widget ButtomWiget(title, icon, bool havetitle) {
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(color: Colors.red, width: 1),
+        border: Border.all(color: Colors.grey[500], width: 1),
       ),
       child: FlatButton(
         onPressed: () {},
@@ -112,13 +121,16 @@ Widget ButtomWiget(title, icon, bool havetitle) {
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: Colors.red, width: 1),
+        border: Border.all(color: Colors.grey[500], width: 1),
       ),
       child: FlatButton(
         onPressed: () {},
         child: Container(
           alignment: Alignment.center,
-          child: Icon(icon,size: 20,),
+          child: Icon(
+            icon,
+            size: 20,
+          ),
         ),
       ),
     );
@@ -180,7 +192,7 @@ Widget DongtaiWiget() {
       color: Colors.white,
       borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
-    margin: EdgeInsets.only(left: 20,right: 20),
+    margin: EdgeInsets.only(left: 20, right: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -200,9 +212,16 @@ Widget DongtaiWiget() {
                 color: Colors.red,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
-              child: Text(
-                '发布',
-                style: TextStyle(color: Colors.white, fontSize: 14),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('images/fabu.png'),
+                  Padding(padding: EdgeInsets.only(right: 5)),
+                  Text(
+                    '发布',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                ],
               ),
             ),
           ),
@@ -214,7 +233,7 @@ Widget DongtaiWiget() {
 
 Widget TowRowWidget() {
   return Container(
-    margin: EdgeInsets.only(top: 10,left: 20,right: 20),
+    margin: EdgeInsets.only(top: 10, left: 20, right: 20),
     height: 110,
     decoration: BoxDecoration(
       color: Colors.white,
@@ -223,8 +242,82 @@ Widget TowRowWidget() {
     child: Column(
       children: <Widget>[
         CommonItem('深色模式', '去系统设置'),
-        Divider(color: Colors.grey[300],indent: 20,endIndent: 20,height: 1,),
+        Divider(
+          color: Colors.grey[300],
+          indent: 20,
+          endIndent: 20,
+          height: 1,
+        ),
         CommonItem('意见反馈', ''),
+      ],
+    ),
+  );
+}
+
+Widget BottomFourWidget() {
+  return Container(
+    height: 210,
+    margin: EdgeInsets.only(top: 10, left: 20, right: 20,bottom: 10),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+    child: Column(
+      children: <Widget>[
+        CommonItem('易览天下', '三分钟了解天下事'),
+        Divider(
+          color: Colors.grey[300],
+          indent: 20,
+          endIndent: 20,
+          height: 1,
+        ),
+        CommonItem('意见反馈用户鉴贴', '邀你鉴定跟帖质量'),
+        Divider(
+          color: Colors.grey[300],
+          indent: 20,
+          endIndent: 20,
+          height: 1,
+        ),
+        CommonItem('京东特供', '新人领188红包'),
+        Divider(
+          color: Colors.grey[300],
+          indent: 20,
+          endIndent: 20,
+          height: 1,
+        ),
+        CommonItem('免流量看新闻', ''),
+      ],
+    ),
+  );
+}
+
+Widget bottomThreeWidget() {
+  return Container(
+    height: 160,
+    margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+    child: Column(
+      children: <Widget>[
+        CommonItem('我的已购', '购买的课程/直播'),
+        Divider(
+          color: Colors.grey[300],
+          indent: 20,
+          endIndent: 20,
+          height: 1,
+        ),
+        CommonItem('我的钱包', ''),
+        Divider(
+          color: Colors.grey[300],
+          indent: 20,
+          endIndent: 20,
+          height: 1,
+        ),
+        CommonItem('扫一扫', ''),
+
+
       ],
     ),
   );
@@ -244,7 +337,10 @@ Widget CommonItem(title, subtitle) {
           flex: 5,
           child: Container(
             alignment: Alignment.centerRight,
-            child: Text(subtitleStr.length > 0 ? subtitleStr : '',style: TextStyle(color: Colors.grey[400]),),
+            child: Text(
+              subtitleStr.length > 0 ? subtitleStr : '',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
           ),
         ),
         Expanded(
@@ -253,7 +349,11 @@ Widget CommonItem(title, subtitle) {
             width: 50,
 //            color: Colors.orange,
 //            alignment: Alignment.r,
-            child: Icon(Icons.arrow_forward_ios,color: Colors.grey[500],size: 20,),
+            child: Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.grey[500],
+              size: 20,
+            ),
           ),
         ),
       ],
