@@ -45,10 +45,10 @@ class _TabbarPageState extends State<TabbarPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(_pageNames[_selectIndex]),
-          elevation: 0.0,
-        ),
+//        appBar: AppBar(
+//          title: Text(_pageNames[_selectIndex]),
+//          elevation: 0.0,
+//        ),
         body: Stack(
           children: <Widget>[
             _getPagesWidget(0),
