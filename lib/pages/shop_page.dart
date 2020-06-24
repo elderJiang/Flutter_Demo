@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class ShopPage extends StatefulWidget {
   @override
@@ -7,154 +8,216 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
-
-  List <Widget> _wigets = [getCommonItem(0),getImageItem(0)];
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 1,
-      itemBuilder: (context, index) {
-        return getImageItem(index);
-
-      },
+  Widget renderCover() {
+    return Stack(
+      fit: StackFit.passthrough,
+      children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+          ),
+          child: Image.network(
+            'http://cms-bucket.ws.126.net/2020/0623/69e81f45p00qccpkx003oc0009c005uc.png',
+            height: 200,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+        Positioned(
+          left: 0,
+          top: 100,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(0, 0, 0, 0),
+                  Color.fromARGB(80, 0, 0, 0),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
-}
 
-Widget getCommonItem(index) {
-  return FlatButton(
-    child: Container(
+  Widget renderUserInfo() {
+    return Container(
+//      color: Colors.orange,
+      margin: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+          Row(
             children: <Widget>[
-              Container(
-                width: 200,
-                height: 60,
-//                color: Colors.orange,
-                padding: EdgeInsets.only(top: 10),
-                child: Text(
-                  '印军方授权一线部队使用武器?媒体:印度或付出代价',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: Color(0xFFCCCCCC),
+                backgroundImage: NetworkImage(''),
               ),
-              Container(
-                width: 200,
-                margin: EdgeInsets.only(top: 10),
-//                color: Colors.amber,
-                alignment: Alignment.topLeft,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-//                      color: Colors.orange,
-                      child: Text(
-                        '热门',
-                        style: TextStyle(color: Colors.red, fontSize: 14),
-                      ),
-                      alignment: Alignment.topLeft,
-                    ),
-                    Text(
-                      '环球时报',
-                      style: TextStyle(color: Colors.black12),
-                    ),
-                    TagWiget(),
-                  ],
-                ),
+              Padding(padding: EdgeInsets.only(left: 8)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '1111',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF333333)),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 2)),
+                  Text(
+                    '2222',
+                    style: TextStyle(fontSize: 12, color: Color(0xFF999999)),
+                  ),
+                ],
               ),
             ],
           ),
-          Expanded(
-            flex: 1,
-            child: AspectRatio(
-              aspectRatio: 3 / 2,
-              child: Container(
-                margin: EdgeInsets.only(left: 20),
-                foregroundDecoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        'http://cms-bucket.ws.126.net/2020/0623/69c7d26fp00qccouz00msc000s600e3c.png'),
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                ),
-              ),
-            ),
+          Text(
+            '2020-6-24',
+            style: TextStyle(fontSize: 13, color: Color(0xFF999999)),
           ),
-        ],
-      ),
-    ),
-    onPressed: () {},
-  );
-}
-
-Widget getImageItem(index) {
-  return FlatButton(
-      onPressed: () {},
-      child: Container(
-        color: Colors.orange,
-        margin: EdgeInsets.all(20),
-        height: 200,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text('鞠婧祎为显脸小戴大号口罩？网友吐槽：做作！'),
-            ),
-            Expanded(
-              flex: 2,
-              child: imageWidget(),
-            ),
-            Expanded(
-              flex: 1,
-              child: Text('读史 259跟帖'),
-            ),
-          ],
-        ),
-      ));
-}
-
-class imageWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-
-          Image.network('http://cms-bucket.ws.126.net/2020/0623/13b066f7p00qccet800f6c000s600e3c.png'),
-          Image.network('http://cms-bucket.ws.126.net/2020/0622/140538edp00qcbbv3002jc0009c005uc.png'),
-          Image.network('http://cms-bucket.ws.126.net/2020/0623/69e81f45p00qccpkx003oc0009c005uc.png'),
-
         ],
       ),
     );
   }
-}
 
-class TagWiget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderPublishContent() {
     return Container(
-      height: 24,
-      width: 60,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.red, width: 0.5),
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      margin: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-//          Icon(Icons.hot_tub),
+          Container(
+            margin: EdgeInsets.only(bottom: 14),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: Color(0xFFFFC600),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(8),
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+              ),
+            ),
+            child: Text(
+              '#话题',
+              style: TextStyle(fontSize: 12, color: Colors.white),
+            ),
+          ),
           Text(
-            '2.5万跟帖',
-            style: TextStyle(color: Colors.red, fontSize: 9),
+            '我是标题我是标题我是标题我是标题我是标题我是标题',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF333333)),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget renderInteractionArea() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.message,
+                size: 16,
+                color: Color(0xFF999999),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 6),
+              ),
+              Text(
+                '365',
+                style: TextStyle(fontSize: 15, color: Color(0xFF999999)),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.favorite,
+                size: 16,
+                color: Color(0xFFFFC600),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 6),
+              ),
+              Text(
+                '365',
+                style: TextStyle(fontSize: 15, color: Color(0xFF999999)),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.share,
+                size: 16,
+                color: Color(0xFF999999),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 6),
+              ),
+              Text(
+                '365',
+                style: TextStyle(fontSize: 15, color: Color(0xFF999999)),
+              ),
+            ],
+          ),
+
+        ],
+      ),
+
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('商城'),
+      ),
+      body: Container(
+        height: 400,
+        margin: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 6,
+              spreadRadius: 4,
+              color: Color.fromARGB(20, 0, 0, 0),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            this.renderCover(),
+            this.renderUserInfo(),
+            this.renderPublishContent(),
+            this.renderInteractionArea(),
+          ],
+        ),
       ),
     );
   }

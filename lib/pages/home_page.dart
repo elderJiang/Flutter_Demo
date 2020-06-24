@@ -51,7 +51,30 @@ class _HomeListState extends State<HomeList>
       throw Exception(' 获取数据失败');
     }
   }
-
+List _pagesTitle = [
+  '新闻',
+  '娱乐',
+  '体育',
+  '财经',
+  '军事',
+  '科技',
+  '手机',
+  '数码',
+  '时尚',
+  '游戏',
+  '教育',
+  '健康',
+  '旅游',
+  '视频',
+];
+//  List <Widget> _tabbars;
+//  List<Widget>tabs(){
+//    for(int i = 0; i<_pagesTitle.length;i++){
+////      Tab(text: _pagesTitle[i],)
+//    _tabbars.add(Tab(text: _pagesTitle[i],));
+//    }
+//    return _tabbars;
+//  }
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -94,18 +117,7 @@ class _HomeListState extends State<HomeList>
         length: 2,
         child:Scaffold(
           appBar: AppBar(
-            title: Container(
-              width: 100,
-              height: 50,
-              color: Colors.orange,
-              child: Center(
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  color: Colors.red,
-                ),
-              ),
-            ),
+            title: Text('首页'),
             bottom: PreferredSize(child: TabBar(tabs: [Tab(text: '111',),Tab(text: '2222',)]), preferredSize: Size.fromHeight(20)),
           ),
           body: TabBarView(
