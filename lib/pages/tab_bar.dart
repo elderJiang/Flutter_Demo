@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterappmmmm/pages/news_detai.dart';
 import 'home_page.dart';
 import 'shop_page.dart';
 import 'me_page.dart';
@@ -100,6 +101,9 @@ class _TabbarPageState extends State<TabbarPage> {
           ),
         ),
       ),
+//      routes: {
+//        '/detail':(context,urlStr)=>NewsDetail(url: urlStr,),
+//      },
     );
   }
   

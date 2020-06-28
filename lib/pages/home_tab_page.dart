@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
+import 'news_detai.dart';
 
 class HomeTabPage extends StatefulWidget {
   @override
@@ -57,11 +58,11 @@ class _HomeTabPageState extends State<HomeTabPage>
     }
   }
 
-  Widget getRow(NewsModel model,Function tap) {
+  Widget getRow(NewsModel model, Function tap) {
     if (model == null) {
       return Container();
     }
-    Function callback = (){};
+    Function callback = () {};
 
     List times = model.mtime.split(' ');
     return FlatButton(
@@ -192,16 +193,25 @@ class _HomeTabPageState extends State<HomeTabPage>
               ),
             );
           } else {
-            return getRow(news[index],(){
+            return getRow(news[index], () {
               print('点击了第$index个Item');
-
+//              Navigator.pushNamed(context, '/detail',urlStr: news[index].url);
+              final urlStr = news[index].url;
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context)=> NewsDetail(url: urlStr,),
+                )
+            );
             });
           }
         }
       },
       controller: _scrollController,
-      separatorBuilder: (BuildContext context,int index){
-        return Divider(color: Colors.grey,height: 0.5,indent: 20,);
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider(
+          color: Colors.grey,
+          height: 0.5,
+          indent: 20,
+        );
       },
     );
   }
