@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'shop_page.dart';
 import 'me_page.dart';
+import 'setting_page.dart';
 
 class TabbarPage extends StatefulWidget {
   @override
@@ -13,11 +14,13 @@ class _TabbarPageState extends State<TabbarPage> {
   List<Widget> _pages = [
     HomePage(),
     ShopPage(),
+    Setting(),
     MePage(),
   ];
   List<String> _pageNames = [
     '首页',
     '购物',
+    '设置',
     '我的',
   ];
 
@@ -54,12 +57,14 @@ class _TabbarPageState extends State<TabbarPage> {
             _getPagesWidget(0),
             _getPagesWidget(1),
             _getPagesWidget(2),
+            _getPagesWidget(3)
           ],
         ),
         bottomNavigationBar: Theme(
           data: ThemeData(
               highlightColor: Color.fromARGB(0, 0, 0, 0),
-              splashColor: Color.fromARGB(0, 0, 0, 0)),
+              splashColor: Color.fromARGB(0, 0, 0, 0)
+              ),
           child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -76,6 +81,13 @@ class _TabbarPageState extends State<TabbarPage> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
+                  Icons.settings,
+                ),
+                title: Text('设置'),
+              ),
+
+              BottomNavigationBarItem(
+                icon: Icon(
                   Icons.school,
                 ),
                 title: Text('我的'),
@@ -83,6 +95,7 @@ class _TabbarPageState extends State<TabbarPage> {
             ],
             currentIndex: _selectIndex,
             selectedItemColor: Colors.amber[800],
+            unselectedItemColor: Colors.grey,
             onTap: _onTap,
           ),
         ),

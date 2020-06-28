@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'home_tab_page.dart';
 import 'post_data.dart';
 import 'detail_page.dart';
 
@@ -123,7 +124,8 @@ List _pagesTitle = [
           body: TabBarView(
             children: <Widget>[
               Center(child: Text('11111'),),
-              Center(child: Text('22222'),),
+//              Center(child: Text('22222'),),
+            HomeTabPage(),
             ],
           ),
           ),
