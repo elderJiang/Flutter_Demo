@@ -194,7 +194,7 @@ class _HomeTabPageState extends State<HomeTabPage>
           } else {
             return getRow(news[index],(){
               print('点击了第$index个Item');
-              Navigator.of(context).push(route)
+
             });
           }
         }
