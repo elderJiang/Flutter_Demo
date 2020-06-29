@@ -24,9 +24,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   http: ^0.12.1
+  flutter_easyrefresh: ^2.1.1
   fluttertoast:
+  build_runner: ^1.0.0
+  json_serializable: ^3.2.0
   google_fonts:
   flutter_webview_plugin: ^0.3.0
+  flutter_swiper: ^1.0.6
+  flutter_screenutil:
+  flutter_custom_bottom_tab_bar:
+    git: https://github.com/LiuC520/flutter_custom_bottom_tab_bar.git
+
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +60,8 @@ flutter:
     - images/lishi.png
     - images/fabu.png
     - images/logo.png
-
+    - images/logo_tux.png
+    - images/plcaehodlerimage.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

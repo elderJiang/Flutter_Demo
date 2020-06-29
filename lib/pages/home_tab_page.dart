@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
 import 'news_detai.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class HomeTabPage extends StatefulWidget {
   @override
@@ -24,7 +26,8 @@ class _HomeTabPageState extends State<HomeTabPage>
     var response = await http.get(
         'http://c.m.163.com/nc/article/headline/T1348647853363/$startIndex-10.html');
 //    print(response.statusCode);
-//    print(response.body);
+    print(response.body);
+
     final responsebody = jsonDecode(response.body);
 //    if (response.statusCode == 200) {
     news = responsebody['T1348647853363']
@@ -67,10 +70,12 @@ class _HomeTabPageState extends State<HomeTabPage>
     List times = model.mtime.split(' ');
     return FlatButton(
       child: Container(
-        padding: EdgeInsets.all(16),
-//      margin: EdgeInsets.only(right: 100),
+//        color: Colors.orange,
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+        margin: EdgeInsets.only(top: 10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
               flex: 2,
@@ -104,11 +109,15 @@ class _HomeTabPageState extends State<HomeTabPage>
             Expanded(
               flex: 1,
               child: Container(
-                width: 80,
-                height: 60,
+//                color: Colors.orange,
+//                width: 80,
+                height: 80,
 //              child: Image.network(model.imgsrc),
                 child: FadeInImage.assetNetwork(
-                    placeholder: '', image: model.imgsrc),
+                  placeholder: 'images/plcaehodlerimage.png',
+                  image: model.imgsrc,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ],
@@ -120,12 +129,12 @@ class _HomeTabPageState extends State<HomeTabPage>
   }
 
   Widget follow(int replyCount) {
-    print('哈哈哈哈哈哈哈$replyCount');
+//    print('哈哈哈哈哈哈哈$replyCount');
 
     if (replyCount > 3000) {
       return Container(
         height: 20,
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.only(left: 5, right: 5),
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.red,
@@ -139,11 +148,10 @@ class _HomeTabPageState extends State<HomeTabPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
-                Icons.hot_tub,
+                Icons.whatshot,
                 color: Colors.red,
                 size: 9,
               ),
-              Padding(padding: EdgeInsets.only(left: 5)),
               Text(
                 '$replyCount跟帖',
                 style: TextStyle(fontSize: 8, color: Colors.red),
@@ -166,7 +174,7 @@ class _HomeTabPageState extends State<HomeTabPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-//    getData();
+    getData();
     this._scrollController.addListener(() {
       if (this._scrollController.position.pixels ==
           this._scrollController.position.maxScrollExtent) {
@@ -177,41 +185,58 @@ class _HomeTabPageState extends State<HomeTabPage>
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: news.length + 1,
-      itemBuilder: (context, index) {
-        if (index == news.length && news.isNotEmpty) {
-          return refreshFooter();
-        } else {
-          if (news.isEmpty) {
-            return Container(
-              color: Colors.red,
-              width: 100,
-              height: MediaQuery.of(context).size.height,
-              child: Center(
-                child: Text('暂无数据!'),
-              ),
-            );
-          } else {
-            return getRow(news[index], () {
-              print('点击了第$index个Item');
+    return EasyRefresh(
+        child: ListView.separated(
+          itemCount: news.length + 1,
+          itemBuilder: (context, index) {
+            if (index == news.length && news.isNotEmpty) {
+              return refreshFooter();
+            } else {
+              if (news.isEmpty) {
+                return Container();
+              } else {
+                return getRow(news[index], () {
+                  print('点击了第$index个Item');
 //              Navigator.pushNamed(context, '/detail',urlStr: news[index].url);
-              final urlStr = news[index].url;
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context)=> NewsDetail(url: urlStr,),
-                )
+                  final urlStr = news[index].url;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewsDetail(
+                          url: urlStr,
+                        ),
+                      ));
+                });
+              }
+            }
+          },
+          controller: _scrollController,
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(
+              color: Colors.grey[300],
+              height: 0.5,
+//          indent: 20,
             );
-            });
-          }
-        }
-      },
-      controller: _scrollController,
-      separatorBuilder: (BuildContext context, int index) {
-        return Divider(
-          color: Colors.grey,
-          height: 0.5,
-          indent: 20,
-        );
+          },
+        ),
+
+      onRefresh: ()async{
+          news.clear();
+
+        var response = await http.get(
+            'http://c.m.163.com/nc/article/headline/T1348647853363/$startIndex-10.html');
+//    print(response.statusCode);
+        print(response.body);
+
+        final responsebody = jsonDecode(response.body);
+//    if (response.statusCode == 200) {
+        news = responsebody['T1348647853363']
+            .map<NewsModel>((item) => NewsModel.fromJson(item))
+            .toList();
+//        startIndex = 0;
+        setState(() {
+          return news;
+        });
       },
     );
   }
