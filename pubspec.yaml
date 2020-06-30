@@ -62,6 +62,13 @@ flutter:
     - images/logo.png
     - images/logo_tux.png
     - images/plcaehodlerimage.png
+    - images/play.png
+    - images/apple.png
+    - images/email.png
+    - images/QQ.png
+    - images/wechat.png
+    - images/weibo.png
+    - images/newapple.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

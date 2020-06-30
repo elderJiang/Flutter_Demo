@@ -19,13 +19,11 @@ class _HomeTabPageState extends State<HomeTabPage>
   bool isloading = false;
   int startIndex = 0;
 
-//  int newsCount = 10;
   ScrollController _scrollController = ScrollController();
 
   Future<List<NewsModel>> getData() async {
     var response = await http.get(
         'http://c.m.163.com/nc/article/headline/T1348647853363/$startIndex-10.html');
-//    print(response.statusCode);
     print(response.body);
 
     final responsebody = jsonDecode(response.body);
@@ -52,7 +50,6 @@ class _HomeTabPageState extends State<HomeTabPage>
       List<NewsModel> morenews = responseBody['T1348647853363']
           .map<NewsModel>((item) => NewsModel.fromJson(item))
           .toList();
-//    return ;
       setState(() {
         news.addAll(morenews);
         print(news.length);
@@ -66,11 +63,9 @@ class _HomeTabPageState extends State<HomeTabPage>
       return Container();
     }
     Function callback = () {};
-
     List times = model.mtime.split(' ');
     return FlatButton(
       child: Container(
-//        color: Colors.orange,
         padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
         margin: EdgeInsets.only(top: 10),
         child: Row(
@@ -109,10 +104,7 @@ class _HomeTabPageState extends State<HomeTabPage>
             Expanded(
               flex: 1,
               child: Container(
-//                color: Colors.orange,
-//                width: 80,
                 height: 80,
-//              child: Image.network(model.imgsrc),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'images/plcaehodlerimage.png',
                   image: model.imgsrc,
@@ -125,12 +117,9 @@ class _HomeTabPageState extends State<HomeTabPage>
       ),
       onPressed: tap,
     );
-//    return ;
   }
 
   Widget follow(int replyCount) {
-//    print('哈哈哈哈哈哈哈$replyCount');
-
     if (replyCount > 3000) {
       return Container(
         height: 20,
@@ -143,7 +132,6 @@ class _HomeTabPageState extends State<HomeTabPage>
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: Container(
-//          color: Colors.orange,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -186,54 +174,47 @@ class _HomeTabPageState extends State<HomeTabPage>
   @override
   Widget build(BuildContext context) {
     return EasyRefresh(
-        child: ListView.separated(
-          itemCount: news.length + 1,
-          itemBuilder: (context, index) {
-            if (index == news.length && news.isNotEmpty) {
-              return refreshFooter();
+      child: ListView.separated(
+        itemCount: news.length + 1,
+        itemBuilder: (context, index) {
+          if (index == news.length && news.isNotEmpty) {
+            return refreshFooter();
+          } else {
+            if (news.isEmpty) {
+              return Container();
             } else {
-              if (news.isEmpty) {
-                return Container();
-              } else {
-                return getRow(news[index], () {
-                  print('点击了第$index个Item');
-//              Navigator.pushNamed(context, '/detail',urlStr: news[index].url);
-                  final urlStr = news[index].url;
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewsDetail(
-                          url: urlStr,
-                        ),
-                      ));
-                });
-              }
+              return getRow(news[index], () {
+                print('点击了第$index个Item');
+                final urlStr = news[index].url;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewsDetail(
+                        url: urlStr,
+                      ),
+                    ));
+              });
             }
-          },
-          controller: _scrollController,
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: Colors.grey[300],
-              height: 0.5,
-//          indent: 20,
-            );
-          },
-        ),
-
-      onRefresh: ()async{
-          news.clear();
+          }
+        },
+        controller: _scrollController,
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider(
+            color: Colors.grey[300],
+            height: 0.5,
+          );
+        },
+      ),
+      onRefresh: () async {
+        news.clear();
 
         var response = await http.get(
             'http://c.m.163.com/nc/article/headline/T1348647853363/$startIndex-10.html');
-//    print(response.statusCode);
         print(response.body);
-
         final responsebody = jsonDecode(response.body);
-//    if (response.statusCode == 200) {
         news = responsebody['T1348647853363']
             .map<NewsModel>((item) => NewsModel.fromJson(item))
             .toList();
-//        startIndex = 0;
         setState(() {
           return news;
         });
@@ -246,7 +227,6 @@ class _HomeTabPageState extends State<HomeTabPage>
       height: 50,
       child: Center(
         child: Row(
-//          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CupertinoActivityIndicator(
@@ -276,7 +256,6 @@ class NewsModel {
   final String digest;
   final String mtime;
 
-//  final int hasImg;
   final String imgsrc;
   final String source;
   final String url;

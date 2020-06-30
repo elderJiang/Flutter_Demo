@@ -61,18 +61,15 @@ class _TabbarPageState extends State<TabbarPage> {
             _getPagesWidget(3)
           ],
         ),
-        bottomNavigationBar: Theme(
-          data: ThemeData(
-              highlightColor: Color.fromARGB(0, 0, 0, 0),
-              splashColor: Color.fromARGB(0, 0, 0, 0)
-              ),
-          child: BottomNavigationBar(
+        bottomNavigationBar:  BottomNavigationBar(
+          showUnselectedLabels: true,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.home,
                 ),
-                title: Text('首页'),
+                title: Text('首页',),
+
               ),
               BottomNavigationBarItem(
                 icon: Icon(
@@ -95,10 +92,9 @@ class _TabbarPageState extends State<TabbarPage> {
               ),
             ],
             currentIndex: _selectIndex,
-            selectedItemColor: Colors.amber[800],
-            unselectedItemColor: Colors.grey,
+            selectedItemColor: Colors.red,
+            unselectedItemColor: Colors.black,
             onTap: _onTap,
-          ),
         ),
       ),
 //      routes: {

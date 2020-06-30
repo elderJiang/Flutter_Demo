@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterappmmmm/pages/inc_page.dart';
+import 'package:flutterappmmmm/pages/myfollow_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'home_tab_page.dart';
@@ -53,6 +54,7 @@ setState(() {
   }
 
   List _pagesTitle = [
+    '关注',
     '新闻',
     '娱乐',
     '体育',
@@ -82,6 +84,7 @@ setState(() {
       length: _pagesTitle.length,
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0.0,
           backgroundColor: Colors.red,
           leading: Container(
             child: Image.asset('images/logo_tux.png'),
@@ -125,6 +128,7 @@ setState(() {
         ),
         body: TabBarView(
           children: <Widget>[
+            MyFollow(),
             HomeTabPage(),
             IncPage(),
             Center(
