@@ -17,14 +17,21 @@ class IncPage extends StatefulWidget {
   _IncPageState createState() => _IncPageState();
 }
 
+enum LoadIngStatus {
+  STATUS_LOADING, //正在加载
+  STATUS_COMPLETED, //加载完毕
+  STATUS_IDEL //空闲
+}
+
 class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
   List<IncModelT1348648517839> modes = [];
   bool isloading = false;
   int startIndex = 0;
   ScrollController _scrollController = ScrollController();
-  bool showtipView = false;
+  String loadText = '加载中...';
+  LoadIngStatus loadStatus = LoadIngStatus.STATUS_IDEL;
 
-  Future<List<IncModelT1348648517839>> getData(bool showtip) async {
+  Future<List<IncModelT1348648517839>> getData() async {
     modes.clear();
     final response = await http
         .get('http://c.3g.163.com/nc/article/list/T1348648517839/0-10.html');
@@ -33,16 +40,8 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
       Map<String, dynamic> json = jsonDecode(response.body);
       IncModelEntity model = IncModelEntity().fromJson(json);
       modes = model.t1348648517839;
-      setState(() {
-        showtipView = showtip;
-        Future.delayed(Duration(seconds: 1),(){
-            setState(() {
-              showtipView = false;
-            });
-        });
-        return modes;
-      });
-//      return model.t1348648517839;
+//      modes.addAll(model.t1348648517839);
+      setState(() {});
     } else {
       print('哈哈哈哈哈哈');
     }
@@ -51,7 +50,7 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-    getData(false);
+    getData();
     this._scrollController.addListener(() {
       if (this._scrollController.position.pixels ==
           this._scrollController.position.maxScrollExtent) {
@@ -61,27 +60,28 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
   }
 
   Future getMoreData(int index) async {
-    if (!isloading) {
+    if (loadStatus == LoadIngStatus.STATUS_IDEL)
       setState(() {
-        isloading = true;
+        loadStatus == LoadIngStatus.STATUS_LOADING;
       });
-      var url =
-          'http://c.m.163.com/nc/article/headline/T1348647853363/$index-10.html';
-      print('URL==$url');
-      var response = await http.get(url);
-      Map<String, dynamic> json = jsonDecode(response.body);
-      IncModelEntity model = IncModelEntity().fromJson(json);
-//      modes = model.t1348648517839;
-      setState(() {
-        modes.addAll(model.t1348648517839);
-        isloading = false;
-      });
-//      return modes;
-    }
+    var url =
+        'http://c.3g.163.com/nc/article/list/T1348648517839/$startIndex-10.html';
+    print('URL==$url');
+    var response = await http.get(url);
+    Map<String, dynamic> json = jsonDecode(response.body);
+    IncModelEntity model = IncModelEntity().fromJson(json);
+    setState(() {
+      modes.addAll(model.t1348648517839);
+      loadStatus == LoadIngStatus.STATUS_IDEL;
+      loadText = '加载中...';
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (modes.length == 0) {
+      return CupertinoActivityIndicator();
+    }
     return Container(
       child: EasyRefresh(
         child: ListView.separated(
@@ -91,49 +91,24 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
               height: 0.5,
             );
           },
-          itemCount: modes.length + 2,
+          itemCount: modes.length + 1,
           itemBuilder: (context, index) {
-            if (index == modes.length && isloading == false) {
-              if (modes.isNotEmpty) {
-                return refreshFooter();
-              } else {
-                return Center(
-                  child: CupertinoActivityIndicator(
-                    radius: 10,
-                  ),
-                );
-              }
+            if (index == modes.length &&
+                loadStatus == LoadIngStatus.STATUS_IDEL) {
+              return refreshFooter();
             } else {
-              if (modes.isNotEmpty) {
-                if(this.showtipView){
-                  if(index == 0){
-                    return Container(
-                      height: 50,
-                      color: Colors.red,
-                      child: Center(
-                        child: Text('加载完成....',style: TextStyle(color: Colors.white,fontSize: 14),),
-                      ),
-                    );
-                  }else{
-                    return BuildRowWithModel(modes[index]);
-
-                  }
-                }else {
-                  return BuildRowWithModel(modes[index]);
-                }
+              IncModelT1348648517839 model = modes[index];
+              if (model.imgextra != null) {
+                return buildImageRow(modes[index]);
               } else {
-                return Center(
-                  child: CupertinoActivityIndicator(
-                    radius: 20,
-                  ),
-                );
+                return BuildRowWithModel(modes[index]);
               }
             }
           },
           controller: _scrollController,
         ),
         onRefresh: () async {
-          getData(true);
+          getData();
         },
       ),
     );
@@ -171,7 +146,6 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
       ));
     }
 
-    print('是撒哈哈是：${imagemodel.length}');
     return Container(
       height: 200,
       width: MediaQuery.of(context).size.width,
@@ -196,6 +170,48 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
   @override
   // TODO: implement wantKeepAlive
   prefix0.bool get wantKeepAlive => true;
+}
+
+buildImageRow(IncModelT1348648517839 model) {
+  List<String> images = [];
+  images.add(model.imgsrc);
+  for (int i = 0; i < model.imgextra.length; i++) {
+    List<String> imgs = [];
+    IncModelT1348648517839Imgextra imagemodel = model.imgextra[i];
+    imgs.add(imagemodel.imgsrc);
+    images.addAll(imgs);
+  }
+  List<Widget> imageWidgets = [];
+  for (int i = 0; i < images.length; i++) {
+    imageWidgets.add(
+      Expanded(
+        flex: 1,
+        child: Image.network(
+          images[i],
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+  return Container(
+    height: 160,
+    padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          model.title,
+          maxLines: 2,
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 10)),
+        Row(
+          children: imageWidgets,
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 10)),
+        Text('${model.source} ${model.replyCount}跟帖'),
+      ],
+    ),
+  );
 }
 
 Widget BuildRowWithModel(IncModelT1348648517839 model) {

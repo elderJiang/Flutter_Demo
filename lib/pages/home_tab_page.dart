@@ -162,7 +162,9 @@ class _HomeTabPageState extends State<HomeTabPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    Future.delayed(Duration(seconds: 2),(){
+      getData();
+    });
     this._scrollController.addListener(() {
       if (this._scrollController.position.pixels ==
           this._scrollController.position.maxScrollExtent) {
@@ -173,6 +175,9 @@ class _HomeTabPageState extends State<HomeTabPage>
 
   @override
   Widget build(BuildContext context) {
+    if (news.length == 0) {
+      return CupertinoActivityIndicator();
+    }
     return EasyRefresh(
       child: ListView.separated(
         itemCount: news.length + 1,
@@ -180,11 +185,7 @@ class _HomeTabPageState extends State<HomeTabPage>
           if (index == news.length && news.isNotEmpty) {
             return refreshFooter();
           } else {
-            if (news.isEmpty) {
-              return Container();
-            } else {
               return getRow(news[index], () {
-                print('点击了第$index个Item');
                 final urlStr = news[index].url;
                 Navigator.push(
                     context,
@@ -194,7 +195,6 @@ class _HomeTabPageState extends State<HomeTabPage>
                       ),
                     ));
               });
-            }
           }
         },
         controller: _scrollController,
