@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappmmmm/pages/news_detai.dart';
+import 'package:flutterappmmmm/pages/video_page.dart';
 import 'home_page.dart';
 import 'shop_page.dart';
 import 'me_page.dart';
@@ -14,13 +15,13 @@ class _TabbarPageState extends State<TabbarPage> {
   int _selectIndex = 0;
   List<Widget> _pages = [
     HomeList(),
-    ShopPage(),
+    VideoPage(),
     Setting(),
     MePage(),
   ];
   List<String> _pageNames = [
     '首页',
-    '购物',
+    '视频',
     '设置',
     '我的',
   ];
@@ -73,20 +74,21 @@ class _TabbarPageState extends State<TabbarPage> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.business,
+                  Icons.play_arrow,
+                  size: 30,
                 ),
-                title: Text('商城'),
+                title: Text('视频'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.settings,
+                  Icons.mode_comment,
                 ),
-                title: Text('设置'),
+                title: Text('圈子'),
               ),
 
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.school,
+                  Icons.person,
                 ),
                 title: Text('我的'),
               ),

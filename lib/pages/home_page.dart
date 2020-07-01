@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterappmmmm/pages/inc_page.dart';
 import 'package:flutterappmmmm/pages/myfollow_page.dart';
+import 'package:flutterappmmmm/pages/sports_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'home_tab_page.dart';
@@ -35,9 +36,10 @@ class HomeList extends StatefulWidget {
 }
 
 class _HomeListState extends State<HomeList>
-    with AutomaticKeepAliveClientMixin,SingleTickerProviderStateMixin {
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   TabController _tabController;
   int _selectIndex = 0;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -45,12 +47,12 @@ class _HomeListState extends State<HomeList>
   void initState() {
     super.initState();
     getitems();
-_tabController = TabController(length: _pagesTitle.length, vsync: this);
-setState(() {
-  _tabController.addListener((){
-    _selectIndex = _tabController.index;
-  });
-});
+    _tabController = TabController(length: _pagesTitle.length, vsync: this);
+    setState(() {
+      _tabController.addListener(() {
+        _selectIndex = _tabController.index;
+      });
+    });
   }
 
   List _pagesTitle = [
@@ -71,12 +73,16 @@ setState(() {
 //    '视频',
   ];
   List<Tab> items = [];
-  List<Tab> getitems(){
-    for(int i =0; i<_pagesTitle.length;i++){
-      items.add(Tab(text: _pagesTitle[i],));
+
+  List<Tab> getitems() {
+    for (int i = 0; i < _pagesTitle.length; i++) {
+      items.add(Tab(
+        text: _pagesTitle[i],
+      ));
     }
     return items;
   }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -100,15 +106,24 @@ setState(() {
               padding: EdgeInsets.only(left: 10),
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.search,color: Colors.white,),
-                  Text('请输入关键字',style: TextStyle(fontSize: 17,color: Colors.white),),
+                  Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    '请输入关键字',
+                    style: TextStyle(fontSize: 17, color: Colors.white),
+                  ),
                 ],
               ),
             ),
           ),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.whatshot), onPressed: (){}),
-            IconButton(icon: Icon(Icons.message),onPressed: (){},),
+            IconButton(icon: Icon(Icons.whatshot), onPressed: () {}),
+            IconButton(
+              icon: Icon(Icons.message),
+              onPressed: () {},
+            ),
           ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(40),
@@ -120,8 +135,12 @@ setState(() {
 //                controller: _tabController,
                 labelColor: Colors.red,
                 unselectedLabelColor: Colors.black,
-                indicatorSize:TabBarIndicatorSize.label,
-                tabs: _pagesTitle.map((item)=>Tab(text: item,)).toList(),
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: _pagesTitle
+                    .map((item) => Tab(
+                          text: item,
+                        ))
+                    .toList(),
               ),
             ),
           ),
@@ -131,17 +150,13 @@ setState(() {
             MyFollow(),
             HomeTabPage(),
             IncPage(),
+            SportPage(),
             Center(
               child: Text('222'),
             ),
             Center(
               child: Text('222'),
             ),
-
-            Center(
-              child: Text('222'),
-            ),
-
           ],
         ),
       ),

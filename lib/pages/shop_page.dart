@@ -182,12 +182,13 @@ class _ShopPageState extends State<ShopPage> {
               ),
             ],
           ),
-
         ],
       ),
-
     );
   }
+  var titleList = ['电影', '电视', '综艺', '读书', '音乐', '同城'];
+
+  List<Widget> tabList;
 
   @override
   Widget build(BuildContext context) {
