@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterappmmmm/pages/home_tab_page.dart';
 import 'package:flutterappmmmm/pages/shortvideo_page.dart';
 import 'package:flutterappmmmm/pages/sports_page.dart';
@@ -41,6 +42,7 @@ class _VideoPageState extends State<VideoPage>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Container(
       color: Colors.white,
       child: SafeArea(

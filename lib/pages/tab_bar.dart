@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterappmmmm/pages/news_detai.dart';
 import 'package:flutterappmmmm/pages/video_page.dart';
 import 'home_page.dart';
@@ -96,6 +97,7 @@ class _TabbarPageState extends State<TabbarPage> {
             currentIndex: _selectIndex,
             selectedItemColor: Colors.red,
             unselectedItemColor: Colors.black,
+            type: BottomNavigationBarType.fixed,
             onTap: _onTap,
         ),
       ),

@@ -31,7 +31,8 @@ dependencies:
   google_fonts:
   flutter_webview_plugin: ^0.3.0
   flutter_swiper: ^1.0.6
-  flutter_screenutil:
+  flutter_screenutil: ^2.1.0
+  palette_generator:
   flutter_custom_bottom_tab_bar:
     git: https://github.com/LiuC520/flutter_custom_bottom_tab_bar.git
 

@@ -4,6 +4,7 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterappmmmm/generated/json/base/json_convert_content.dart';
@@ -145,7 +146,6 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
         fit: BoxFit.cover,
       ));
     }
-
     return Container(
       height: 200,
       width: MediaQuery.of(context).size.width,
@@ -185,10 +185,10 @@ buildImageRow(IncModelT1348648517839 model) {
   for (int i = 0; i < images.length; i++) {
     imageWidgets.add(
       Expanded(
-        flex: 1,
-        child: Image.network(
-          images[i],
-          fit: BoxFit.cover,
+        child: Container(
+          child: Image.network(
+            images[i],
+          ),
         ),
       ),
     );
@@ -202,13 +202,15 @@ buildImageRow(IncModelT1348648517839 model) {
         Text(
           model.title,
           maxLines: 2,
+          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: imageWidgets,
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
-        Text('${model.source} ${model.replyCount}跟帖'),
+        Text('${model.source} ${model.replyCount}跟帖',style: TextStyle(fontSize: 14,color: Colors.black54),),
       ],
     ),
   );
@@ -216,11 +218,10 @@ buildImageRow(IncModelT1348648517839 model) {
 
 Widget BuildRowWithModel(IncModelT1348648517839 model) {
   return Container(
-    margin: EdgeInsets.all(16),
+    margin: EdgeInsets.only(left: 16,top: 16,right: 16,bottom: 10),
     child: Column(
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
@@ -233,11 +234,11 @@ Widget BuildRowWithModel(IncModelT1348648517839 model) {
                   children: <Widget>[
                     Text(
                       model.title,
-                      style: TextStyle(fontSize: 17, color: Colors.black),
+                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Padding(padding: EdgeInsets.only(top: 10)),
+//                    Padding(padding: EdgeInsets.only(top: 10)),
                     Container(
                       child: Row(
                         children: <Widget>[
@@ -276,11 +277,6 @@ Widget BuildRowWithModel(IncModelT1348648517839 model) {
                 ),
               ),
             ),
-          ],
-        ),
-        Column(
-          children: <Widget>[
-//           model.ads.length > 0 ? adsWidgets(model.ads) : null,
           ],
         ),
       ],

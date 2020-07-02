@@ -2,11 +2,10 @@ import 'dart:ui';
 import 'dart:ui' as prefix1;
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart' as prefix0;
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix2;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterappmmmm/pages/me_page.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 class MyFollow extends StatefulWidget {
   @override
@@ -26,7 +25,6 @@ class _MyFollowState extends State<MyFollow> {
         guessulike(),
         guessulike(),
         guessulike(),
-
       ],
     );
   }
@@ -61,7 +59,7 @@ class _MyFollowState extends State<MyFollow> {
                             width: double.infinity,
                             color: Colors.black54,
                           ),
-                          loginView(() {
+                          loginView(context,() {
                             Navigator.pop(context);
                           }),
                         ],
@@ -106,7 +104,8 @@ guessulike() {
               child: Row(
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: NetworkImage('https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3107083461,4268460867&fm=111&gp=0.jpg'),
+                    backgroundImage: NetworkImage(
+                        'https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3107083461,4268460867&fm=111&gp=0.jpg'),
                     radius: 15,
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
@@ -136,12 +135,21 @@ guessulike() {
           children: <Widget>[
             Expanded(
               flex: 3,
-              child: Text('"损害印度安全！"印度官方：禁用59款中国APP，包括抖音，快手等，，包括抖音，快手等，包括抖音，快手等',style: TextStyle(fontSize: 16),maxLines: 2,overflow: TextOverflow.ellipsis,),
-              
+              child: Text(
+                '"损害印度安全！"印度官方：禁用59款中国APP，包括抖音，快手等，，包括抖音，快手等，包括抖音，快手等',
+                style: TextStyle(fontSize: 16),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Expanded(
               flex: 1,
-              child: Image.network('https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3256100974,305075936&fm=26&gp=0.jpg',width: 80,height: 60,fit: BoxFit.cover,),
+              child: Image.network(
+                'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3256100974,305075936&fm=26&gp=0.jpg',
+                width: 80,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
             ),
           ],
         ),
@@ -151,7 +159,8 @@ guessulike() {
 }
 
 //登录
-loginView(Function dismiss) {
+loginView(context,Function dismiss) {
+
   return Container(
     decoration: BoxDecoration(
       color: Colors.white,
@@ -320,9 +329,6 @@ Widget hotTuiJian() {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         header(),
-//        Padding(
-//          padding: EdgeInsets.only(bottom: 20),
-//        ),
         Container(
           height: 300,
           color: Colors.white,
@@ -355,7 +361,7 @@ followRow() {
               ),
               Text(
                 '关注',
-                style: prefix0.TextStyle(
+                style: TextStyle(
                     color: Colors.red,
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
@@ -470,7 +476,17 @@ getItemCenterImage(List imgs) {
               top: 20,
               left: 20,
               right: 20,
-              child: Image.asset('images/play.png',width: 40,height: 40,),
+              child: Image.asset(
+                'images/play.png',
+                width: 40,
+                height: 40,
+              ),
+            ),
+            Positioned(
+              left:0,right: 0,bottom: 0,height: 60,
+              child: Container(
+
+              ),
             ),
             Positioned(
               bottom: 20,
@@ -561,4 +577,3 @@ Widget hotCardWidget(String imgurl, String descrip, BorderRadius radius) {
     ),
   );
 }
-
