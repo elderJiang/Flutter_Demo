@@ -31,7 +31,7 @@ dependencies:
   google_fonts:
   flutter_webview_plugin: ^0.3.0
   flutter_swiper: ^1.0.6
-  flutter_screenutil: ^2.1.0
+  flutter_screenutil:
   palette_generator:
   flutter_custom_bottom_tab_bar:
     git: https://github.com/LiuC520/flutter_custom_bottom_tab_bar.git
@@ -71,6 +71,11 @@ flutter:
     - images/weibo.png
     - images/newapple.png
     - images/bgimage.jpg
+    - images/background.png
+    - images/huiyuanri.png
+    - images/yiyuanbaoyou.png
+    - images/baokuanmiaosha.png
+    - images/shengrijingxi.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
