@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterappmmmm/pages/finance_page.dart';
 import 'package:flutterappmmmm/pages/inc_page.dart';
 import 'package:flutterappmmmm/pages/myfollow_page.dart';
 import 'package:flutterappmmmm/pages/sports_page.dart';
@@ -151,9 +152,7 @@ class _HomeListState extends State<HomeList>
             HomeTabPage(),
             IncPage(),
             SportPage(),
-            Center(
-              child: Text('222'),
-            ),
+            FinancePage(),
             Center(
               child: Text('222'),
             ),

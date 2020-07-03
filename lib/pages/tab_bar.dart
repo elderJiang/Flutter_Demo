@@ -32,15 +32,6 @@ class _TabbarPageState extends State<TabbarPage> {
       _selectIndex = index;
     });
   }
-  Widget _getPagesWidget(int index){
-    return Offstage(
-      offstage: _selectIndex != index,
-      child: TickerMode(
-        enabled: _selectIndex == index,
-        child: _pages[index],
-      ),
-    );
-  }
 
   @override
   void didUpdateWidget(TabbarPage oldWidget) {
@@ -51,17 +42,9 @@ class _TabbarPageState extends State<TabbarPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-//        appBar: AppBar(
-//          title: Text(_pageNames[_selectIndex]),
-//          elevation: 0.0,
-//        ),
-        body: Stack(
-          children: <Widget>[
-            _getPagesWidget(0),
-            _getPagesWidget(1),
-            _getPagesWidget(2),
-            _getPagesWidget(3)
-          ],
+        body: IndexedStack(
+          children: _pages,
+          index: _selectIndex,
         ),
         bottomNavigationBar:  BottomNavigationBar(
           showUnselectedLabels: true,
@@ -71,7 +54,6 @@ class _TabbarPageState extends State<TabbarPage> {
                   Icons.home,
                 ),
                 title: Text('首页',),
-
               ),
               BottomNavigationBarItem(
                 icon: Icon(
@@ -86,7 +68,6 @@ class _TabbarPageState extends State<TabbarPage> {
                 ),
                 title: Text('圈子'),
               ),
-
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,
@@ -101,9 +82,6 @@ class _TabbarPageState extends State<TabbarPage> {
             onTap: _onTap,
         ),
       ),
-//      routes: {
-//        '/detail':(context,urlStr)=>NewsDetail(url: urlStr,),
-//      },
     );
   }
   

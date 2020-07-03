@@ -33,13 +33,9 @@ class _SportPageTabBarState extends State<SportPageTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, width: 375, height: 957);
-//MediaQuery.removePadding(context: context, child: buildListView(),removeTop: true,);
+    ScreenUtil.init(context, width: 375, height: 812,allowFontScaling: true);
     return Scaffold(
       backgroundColor: Colors.white,
-//      appBar: AppBar(
-//        title: Text('HeroTest'),
-//      ),
       body: buildListView(),
     );
   }
@@ -51,6 +47,7 @@ buildListView() {
     children: <Widget>[
       header(),
       tequan(),
+      zhuanxiang(),
     ],
   );
 }
@@ -68,7 +65,6 @@ screentool() {
       Container(
         color: Colors.orange,
         width: ScreenUtil().setWidth(100),
-//        height: ScreenUtil().setHeight(100),
         height: ScreenUtil().setWidth(100),
       ),
     ],
@@ -113,10 +109,8 @@ testWidget() {
 
 header() {
   double navH = ScreenUtil.statusBarHeight;
-
   return Container(
-//    color: Colors.orange,
-    height: ScreenUtil().setWidth(294),
+    height: ScreenUtil().setWidth(319),
     child: Stack(
       children: <Widget>[
         Positioned(
@@ -169,14 +163,13 @@ header() {
               borderRadius: BorderRadius.all(Radius.circular(8)),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black54,
+                    color: Colors.black54.withOpacity(0.2),
                     offset: Offset(0, 2),
-                    spreadRadius: 2,
-                    blurRadius: 3)
+                    spreadRadius: 1,
+                    blurRadius: 2)
               ],
             ),
             width: ScreenUtil().setWidth(355),
-//            height: ScreenUtil().setHeight(226),
             child: Column(
               children: <Widget>[
                 Padding(padding: EdgeInsets.only(bottom: 18)),
@@ -194,13 +187,10 @@ header() {
                   '极速审批  通过率高  专属优惠',
                   style: TextStyle(color: Color(0xFFEF843E), fontSize: 14),
                 ),
-//                  Text('aaaaaaaa'),
-//                  Text('aaaaaaaa'),
-//                  Text('底部安全区距离:${ScreenUtil.bottomBarHeight}dp'),
-//                  Text('状态栏高度:${ScreenUtil.statusBarHeight}dp'),
                 Padding(padding: EdgeInsets.only(bottom: 20)),
-
                 FlatButton(
+                  highlightColor: Colors.white,
+                    splashColor: Colors.white,
                     onPressed: () {},
                     child: Container(
                       height: 40,
@@ -227,17 +217,17 @@ header() {
 
 tequan() {
   return Container(
-    padding: EdgeInsets.all(10),
+    padding: EdgeInsets.only(top: 10, bottom: 10),
     margin: EdgeInsets.symmetric(horizontal: 10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(8)),
       color: Colors.white,
       boxShadow: [
         BoxShadow(
-            color: Colors.black54,
+            color: Colors.black54.withOpacity(0.2),
             offset: Offset(0, 2),
-            spreadRadius: 2,
-            blurRadius: 3),
+            spreadRadius: 1,
+            blurRadius: 2),
       ],
     ),
     child: Column(
@@ -245,7 +235,7 @@ tequan() {
         Row(
           children: <Widget>[
             Padding(padding: EdgeInsets.only(left: 20)),
-            Text('尊享特权'),
+            Text('尊享特权',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.black),),
           ],
         ),
         Padding(
@@ -254,10 +244,10 @@ tequan() {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            imageItem('images/huiyuanri.png','会员日',Color(0xFFB27511)),
-            imageItem('images/yiyuanbaoyou.png','1元包邮',Color(0xFF3B609D)),
-            imageItem('images/baokuanmiaosha.png','爆款秒杀',Color(0xFF317285)),
-            imageItem('images/shengrijingxi.png','生日惊喜',Color(0xFF9B494F)),
+            imageItem('images/huiyuanri.png', '会员日', Color(0xFFB27511)),
+            imageItem('images/yiyuanbaoyou.png', '1元包邮', Color(0xFF3B609D)),
+            imageItem('images/baokuanmiaosha.png', '爆款秒杀', Color(0xFF317285)),
+            imageItem('images/shengrijingxi.png', '生日惊喜', Color(0xFF9B494F)),
           ],
         ),
       ],
@@ -265,20 +255,85 @@ tequan() {
   );
 }
 
-imageItem(String name,String title,Color textColor) {
+zhuanxiang(){
+  return Container(
+//    height: ScreenUtil().setHeight(243),
+    padding: EdgeInsets.all(6),
+    child: Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(padding: EdgeInsets.only(top: 20)),
+          Row(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(left: 20)),
+                Text('专项分期',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 18),),
+            ],
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 10)),
+          Wrap(
+            direction: Axis.horizontal,
+            spacing: 10,
+            runSpacing: 10,
+            children: <Widget>[
+              InkWell(
+                child:buildItem('images/zx.png', '装修'),
+                onTap: (){
+                },
+                splashColor: Colors.white,
+                highlightColor: Colors.white,
+              ),
+              buildItem('images/jy.png', '教育'),
+              buildItem('images/ym.png', '医美'),
+              buildItem('images/hzw.png', '孩子王'),
+              buildItem('images/hlzj.png', '海澜之家'),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+buildItem(String image,String title){
+  return Container(
+    width: (ScreenUtil.screenWidthDp-50)/3,
+    height: 80,
+    child: Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 10),
+          height: 38,
+          width: 38,
+          child:Image.asset(image),
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 10)),
+        Text(title),
+      ],
+    ),
+  );
+}
+
+imageItem(String name, String title, Color textColor) {
   return Container(
     width: 76,
     height: 76,
     child: Stack(
       children: <Widget>[
         Positioned.fill(
-            child: Image.asset(name),
+          child: Image.asset(name),
         ),
         Positioned(
           top: 12,
           left: 10,
           right: 10,
-          child: Text(title,style: TextStyle(color: textColor,fontSize: 14),),
+          child: Text(
+            title,
+            style: TextStyle(color: textColor, fontSize: 14),
+          ),
         ),
       ],
     ),

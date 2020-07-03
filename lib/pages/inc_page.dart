@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:core' as prefix0;
 import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
@@ -80,11 +79,19 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 375, height: 812,allowFontScaling: true);
     if (modes.length == 0) {
       return CupertinoActivityIndicator();
     }
     return Container(
       child: EasyRefresh(
+        header: ClassicalHeader(
+          refreshedText: '刷新完成',
+          refreshingText: '加载中..',
+          refreshReadyText: '松开刷新',
+            infoText:'',
+          refreshText: '下拉刷新',
+        ),
         child: ListView.separated(
           separatorBuilder: (BuildContext context, int index) {
             return Divider(
@@ -111,6 +118,7 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
         onRefresh: () async {
           getData();
         },
+
       ),
     );
   }
@@ -169,7 +177,7 @@ class _IncPageState extends State<IncPage> with AutomaticKeepAliveClientMixin {
 
   @override
   // TODO: implement wantKeepAlive
-  prefix0.bool get wantKeepAlive => true;
+  bool get wantKeepAlive => true;
 }
 
 buildImageRow(IncModelT1348648517839 model) {
@@ -182,13 +190,16 @@ buildImageRow(IncModelT1348648517839 model) {
     images.addAll(imgs);
   }
   List<Widget> imageWidgets = [];
+
+  double imageW = (ScreenUtil.screenWidthDp-27)/3;
   for (int i = 0; i < images.length; i++) {
     imageWidgets.add(
-      Expanded(
-        child: Container(
-          child: Image.network(
-            images[i],
-          ),
+      Container(
+        width: imageW,
+        height: 80,
+        child: Image.network(
+          images[i],
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -225,7 +236,7 @@ Widget BuildRowWithModel(IncModelT1348648517839 model) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Container(
                 height: 100,
                 child: Column(
@@ -238,7 +249,6 @@ Widget BuildRowWithModel(IncModelT1348648517839 model) {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-//                    Padding(padding: EdgeInsets.only(top: 10)),
                     Container(
                       child: Row(
                         children: <Widget>[
@@ -269,8 +279,8 @@ Widget BuildRowWithModel(IncModelT1348648517839 model) {
             Expanded(
               flex: 1,
               child: Container(
-                width: 80,
-                height: 60,
+                width: 100,
+                height: 80,
                 child: Image.network(
                   model.imgsrc,
                   fit: BoxFit.cover,
